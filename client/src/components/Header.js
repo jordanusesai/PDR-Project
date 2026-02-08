@@ -1,0 +1,125 @@
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { LogOut, Users, Home, Plus } from 'lucide-react';
+
+const Header = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  return (
+    <header style={{
+      backgroundColor: '#6B8DD6',
+      color: 'white',
+      padding: '1rem 0',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    }}>
+      <div className="container">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <Link to="/dashboard" style={{
+            textDecoration: 'none',
+            color: 'white',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold',
+              color: '#6B8DD6'
+            }}>
+              PDR
+            </div>
+            PDR Split
+          </Link>
+
+          <nav style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2rem'
+          }}>
+            <Link to="/dashboard" style={{
+              color: 'white',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s'
+            }}>
+              <Home size={20} />
+              Dashboard
+            </Link>
+
+            <Link to="/groups" style={{
+              color: 'white',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s'
+            }}>
+              <Users size={20} />
+              Groups
+            </Link>
+
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem'
+            }}>
+              <span style={{
+                fontSize: '0.9rem',
+                opacity: 0.9
+              }}>
+                Welcome, {user?.username}
+              </span>
+              <button
+                onClick={handleLogout}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid white',
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'background-color 0.2s'
+                }}
+                onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.1)'}
+                onMouseOut={(e) => e.target.style.backgroundColor = 'transparent'}
+              >
+                <LogOut size={16} />
+                Logout
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

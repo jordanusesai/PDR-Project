@@ -1,0 +1,24 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#6B8DD6"/>
+  
+  <!-- Trident symbol inspired by Barbados flag -->
+  <g transform="translate(100, 100)">
+    <!-- Main trident shaft -->
+    <rect x="-8" y="-60" width="16" height="120" fill="#FFD700" rx="2"/>
+    
+    <!-- Trident prongs -->
+    <rect x="-25" y="-60" width="12" height="40" fill="#FFD700" rx="2" transform="rotate(-30)"/>
+    <rect x="13" y="-60" width="12" height="40" fill="#FFD700" rx="2" transform="rotate(30)"/>
+    <rect x="-6" y="-70" width="12" height="35" fill="#FFD700" rx="2"/>
+    
+    <!-- Decorative circles on prongs -->
+    <circle cx="-20" cy="-55" r="4" fill="#FFD700"/>
+    <circle cx="20" cy="-55" r="4" fill="#FFD700"/>
+    <circle cx="0" cy="-65" r="4" fill="#FFD700"/>
+  </g>
+  
+  <!-- PDR Text -->
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FFD700" text-anchor="middle">PDR</text>
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="16" fill="#FFD700" text-anchor="middle">SPLIT</text>
+</svg>
