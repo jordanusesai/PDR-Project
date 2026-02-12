@@ -7,8 +7,10 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const groupRoutes = require('./routes/groups');
 const expenseRoutes = require('./routes/expenses');
-const userRoutes = require('./routes/users');
-const usernameRoutes = require('./routes/username');
+
+// Remove these lines
+const userRoutes = require('./routes/users'); //DELETE
+const usernameRoutes = require('./routes/username'); //DELETE
 
 const app = express();
 
@@ -20,8 +22,10 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/expenses', expenseRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/username', usernameRoutes);
+
+// Remove these lines
+app.use('/api/users', userRoutes); //DELETE
+app.use('/api/username', usernameRoutes); //DELETE
 
 // Database connection - Cleaned up for 2026
 const mongoURI = process.env.MONGODB_URI;

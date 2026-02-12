@@ -1,3 +1,6 @@
+// updateProfile to your imports
+const { register, login, updateProfile } = require('../controllers/authController');
+
 const express = require('express');
 const { register, login } = require('../controllers/authController');
 const auth = require('../middleware/auth');
@@ -17,9 +20,13 @@ router.get('/me', auth, async (req, res) => {
       id: req.user._id,
       username: req.user.username,
       email: req.user.email,
-      avatar: req.user.avatar
+      avatar: req.user.avatar,
+      needsUsername: !req.user.username // Tells frontend to show setup screen
     }
   });
 });
 
 module.exports = router;
+
+// Update profile route
+router.put('/update-profile', auth, updateProfile);
