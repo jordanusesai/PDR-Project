@@ -347,7 +347,14 @@ const GroupPage = () => {
                 padding: '2rem',
                 color: '#718096'
               }}>
-                <DollarSign size={48} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
+                <div style={{ 
+                  fontSize: '48px', 
+                  margin: '0 auto 1rem', 
+                  opacity: 0.5,
+                  color: '#718096'
+                }}>
+                  £
+                </div>
                 <p>No expenses yet</p>
                 <Link
                   to={`/group/${groupId}/expense`}

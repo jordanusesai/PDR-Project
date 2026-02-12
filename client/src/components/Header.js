@@ -34,19 +34,16 @@ const Header = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: 'white',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              color: '#6B8DD6'
-            }}>
-              PDR
-            </div>
+            <img 
+              src="/pdr-logo.png" 
+              alt="PDR Logo" 
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                objectFit: 'cover'
+              }}
+            />
             PDR Split
           </Link>
 

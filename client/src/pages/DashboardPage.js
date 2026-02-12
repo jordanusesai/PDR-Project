@@ -8,7 +8,11 @@ import api from '../services/api';
 const DashboardPage = () => {
   const { groups, fetchGroups, createGroup, loading } = useGroup();
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newGroup, setNewGroup] = useState({ name: '', description: '' });
+  const [newGroup, setNewGroup] = useState({ 
+    name: '', 
+    description: '', 
+    defaultExchangeRate: '1.00' 
+  });
   const [recentExpenses, setRecentExpenses] = useState([]);
 
   useEffect(() => {
@@ -306,6 +310,22 @@ const DashboardPage = () => {
                     placeholder="What's this group for?"
                     rows="3"
                   />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Default Exchange Rate (1 GBP = X local currency)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={newGroup.defaultExchangeRate}
+                    onChange={(e) => setNewGroup({ ...newGroup, defaultExchangeRate: e.target.value })}
+                    className="form-input exchange-rate-field"
+                    placeholder="1.00"
+                  />
+                  <div style={{ fontSize: '0.8rem', color: '#718096', marginTop: '0.25rem' }} className="exchange-rate-hint">
+                    Set to 0 if expenses will be in GBP, or enter the exchange rate for your local currency
+                  </div>
                 </div>
 
                 <div style={{

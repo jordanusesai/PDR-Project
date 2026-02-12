@@ -12,6 +12,12 @@ const groupSchema = new mongoose.Schema({
     trim: true,
     maxlength: 500
   },
+  defaultExchangeRate: {
+    type: Number,
+    default: 1.00,
+    min: 0,
+    description: 'Default exchange rate for group expenses (1 GBP = X local currency)'
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
