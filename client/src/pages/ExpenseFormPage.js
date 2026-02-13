@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useGroup } from '../context/GroupContext';
 import { useAuth } from '../context/AuthContext';
-import { useDarkMode } from '../context/DarkModeContext';
 import { toast } from 'react-toastify';
 import { ArrowLeft, Save, Trash2 } from 'lucide-react';
-import CurrencySelector from '../components/CurrencySelector';
 import api from '../services/api';
 
 const ExpenseFormPage = () => {
@@ -13,7 +11,6 @@ const ExpenseFormPage = () => {
   const navigate = useNavigate();
   const { currentGroup, fetchGroup } = useGroup();
   const { user } = useAuth();
-  const { isDarkMode } = useDarkMode();
   
   const [formData, setFormData] = useState({
     title: '',
@@ -28,6 +25,12 @@ const ExpenseFormPage = () => {
   
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
+  const currencies = [
+    'USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 
+    'SEK', 'NZD', 'MXN', 'SGD', 'HKD', 'NOK', 'KRW', 'TRY',
+    'INR', 'RUB', 'BRL', 'ZAR'
+  ];
 
   const expenseTypes = [
     { value: 'food', label: 'Food & Dining' },
@@ -50,11 +53,10 @@ const ExpenseFormPage = () => {
       // Set default values for new expense
       setFormData(prev => ({
         ...prev,
-        paidBy: user?.id || '',
-        conversionRate: currentGroup?.defaultExchangeRate?.toFixed(2) || '1.00'
+        paidBy: user?.id || ''
       }));
     }
-  }, [groupId, expenseId, user?.id, currentGroup?.defaultExchangeRate]);
+  }, [groupId, expenseId, user?.id]);
 
   const fetchExpense = async () => {
     try {
@@ -122,8 +124,8 @@ const ExpenseFormPage = () => {
       return;
     }
     
-    if (!formData.conversionRate || parseFloat(formData.conversionRate) < 0) {
-      toast.error('Conversion rate must be 0 or greater');
+    if (!formData.conversionRate || parseFloat(formData.conversionRate) <= 0) {
+      toast.error('Conversion rate must be greater than 0');
       return;
     }
     
@@ -263,29 +265,33 @@ const ExpenseFormPage = () => {
                 <div className="grid grid-cols-2" style={{ gap: '1rem' }}>
                   <div className="form-group">
                     <label className="form-label">Currency</label>
-                    <CurrencySelector
+                    <select
+                      name="currency"
                       value={formData.currency}
-                      onChange={(currency) => setFormData(prev => ({ ...prev, currency: currency }))}
-                      placeholder="Select currency"
-                    />
+                      onChange={handleChange}
+                      className="form-select"
+                    >
+                      {currencies.map(currency => (
+                        <option key={currency} value={currency}>
+                          {currency}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">1 GBP is: {currentGroup?.defaultExchangeRate ? `(Group Default: ${currentGroup.defaultExchangeRate})` : ''}</label>
+                    <label className="form-label">Conversion Rate to GBP *</label>
                     <input
                       type="text"
                       name="conversionRate"
                       value={formData.conversionRate}
                       onChange={handleChange}
-                      className="form-input exchange-rate-field"
-                      placeholder={currentGroup?.defaultExchangeRate?.toFixed(2) || '1.00'}
+                      className="form-input"
+                      placeholder="1.00"
                       required
                     />
-                    <div style={{ fontSize: '0.8rem', color: '#718096', marginTop: '0.25rem' }} className="exchange-rate-hint">
-                      {currentGroup?.defaultExchangeRate === 0 ? 
-                        'All expenses in this group are in GBP' : 
-                        `Group default is ${currentGroup?.defaultExchangeRate || '1.00'} - you can override for this expense`
-                      }
+                    <div style={{ fontSize: '0.8rem', color: '#718096', marginTop: '0.25rem' }}>
+                      2 decimal places required
                     </div>
                   </div>
                 </div>

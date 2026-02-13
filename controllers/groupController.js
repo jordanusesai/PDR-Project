@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 const createGroup = async (req, res) => {
   try {
-    const { name, description, defaultExchangeRate } = req.body;
+    const { name, description } = req.body;
 
     if (!name) {
       return res.status(400).json({ message: 'Group name is required' });
@@ -12,7 +12,6 @@ const createGroup = async (req, res) => {
     const group = new Group({
       name,
       description,
-      defaultExchangeRate: defaultExchangeRate || 1.00,
       createdBy: req.user._id,
       members: [{ user: req.user._id }]
     });
