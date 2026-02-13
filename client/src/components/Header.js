@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-// Deleted DarkModeContext import
-import { LogOut, Users, Home } from 'lucide-react';
+import { useDarkMode } from '../context/DarkModeContext';
+import { LogOut, Home } from 'lucide-react';
 import MobileNav from './MobileNav';
 
 const Header = () => {
   const { user, logout } = useAuth();
-  // Deleted useDarkMode hook
+  const { isDarkMode } = useDarkMode();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -37,19 +37,16 @@ const Header = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: 'white',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              color: '#6B8DD6'
-            }}>
-              PDR
-            </div>
+            <img 
+              src="/pdr-logo.png" 
+              alt="PDR Logo" 
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '8px',
+                objectFit: 'cover'
+              }}
+            />
             PDR Split
           </Link>
 
@@ -67,20 +64,6 @@ const Header = () => {
             }}>
               <Home size={20} />
               Dashboard
-            </Link>
-
-            <Link to="/groups" style={{
-              color: 'white',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
-              transition: 'background-color 0.2s'
-            }}>
-              <Users size={20} />
-              Groups
             </Link>
 
             <div style={{

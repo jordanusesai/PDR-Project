@@ -1,8 +1,6 @@
 // updateProfile to your imports
 const { register, login, updateProfile } = require('../controllers/authController');
-
 const express = require('express');
-const { register, login } = require('../controllers/authController');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
@@ -26,7 +24,7 @@ router.get('/me', auth, async (req, res) => {
   });
 });
 
-module.exports = router;
-
 // Update profile route
 router.put('/update-profile', auth, updateProfile);
+
+module.exports = router;

@@ -126,11 +126,9 @@ body {
   width: 100%;
   padding: 12px;
   border: 2px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  resize: vertical;
-  min-height: 100px;
-  font-family: inherit;
+  border-radius: 6px;
+  background-color: #F7FAFC;
+  transition: all 0.2s ease;
 }
 
 .checkbox-group {
@@ -180,6 +178,12 @@ body {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, 1fr);
+}
+
+/* Loading Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Enhanced Mobile-First Responsive Design */
@@ -336,3 +340,31 @@ html {
 .justify-between { justify-content: space-between; }
 .gap-2 { gap: 8px; }
 .gap-4 { gap: 16px; }
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Mobile menu toggle - hidden by default */
+.mobile-menu-toggle {
+  display: none;
+}
+
+/* Mobile navigation - hidden by default */
+.mobile-nav {
+  display: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .desktop-nav {
+    display: none;
+  }
+}

@@ -19,10 +19,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/expenses', expenseRoutes);
 
-// Remove these lines
-app.use('/api/users', userRoutes); //DELETE
-app.use('/api/username', usernameRoutes); //DELETE
-
 // Database connection - Cleaned up for 2026
 const mongoURI = process.env.MONGODB_URI;
 

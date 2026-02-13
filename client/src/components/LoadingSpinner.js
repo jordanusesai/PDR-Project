@@ -1,13 +1,16 @@
 import React from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const LoadingSpinner = () => {
+  const { isDarkMode } = useDarkMode();
+
   return (
     <div style={{
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       minHeight: '100vh',
-      backgroundColor: '#F0F4F8'
+      backgroundColor: isDarkMode ? '#1A202C' : '#F0F4F8'
     }}>
       <div style={{
         display: 'flex',
@@ -18,7 +21,7 @@ const LoadingSpinner = () => {
         <div style={{
           width: '50px',
           height: '50px',
-          border: '4px solid #E2E8F0',
+          border: '4px solid ' + (isDarkMode ? '#4A5568' : '#E2E8F0'),
           borderTop: '4px solid #6B8DD6',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite'
@@ -31,12 +34,6 @@ const LoadingSpinner = () => {
           PDR Split
         </div>
       </div>
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 };

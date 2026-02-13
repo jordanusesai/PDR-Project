@@ -182,7 +182,7 @@ const ExpenseFormPage = () => {
   const calculateGBPAmount = () => {
     const amount = parseFloat(formData.amount) || 0;
     const rate = parseFloat(formData.conversionRate) || 1;
-    return (amount * rate).toFixed(2);
+    return (amount / rate).toFixed(2);
   };
 
   if (!currentGroup) {
@@ -280,7 +280,7 @@ const ExpenseFormPage = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Conversion Rate to GBP *</label>
+                    <label className="form-label">One GBP is: *</label>
                     <input
                       type="text"
                       name="conversionRate"
@@ -291,7 +291,7 @@ const ExpenseFormPage = () => {
                       required
                     />
                     <div style={{ fontSize: '0.8rem', color: '#718096', marginTop: '0.25rem' }}>
-                      2 decimal places required
+                      Enter how many local currency units equal 1 GBP
                     </div>
                   </div>
                 </div>
