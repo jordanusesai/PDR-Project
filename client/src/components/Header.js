@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useDarkMode } from '../context/DarkModeContext';
 import { LogOut, Users, Home, Plus } from 'lucide-react';
+import MobileNav from './MobileNav';
 
 const Header = () => {
   const { user, logout } = useAuth();
+  const { isDarkMode } = useDarkMode();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -47,11 +50,8 @@ const Header = () => {
             PDR Split
           </Link>
 
-          <nav style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2rem'
-          }}>
+          {/* Desktop Navigation */}
+          <nav className="desktop-nav">
             <Link to="/dashboard" style={{
               color: 'white',
               textDecoration: 'none',
@@ -115,6 +115,9 @@ const Header = () => {
           </nav>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      <MobileNav />
     </header>
   );
 };

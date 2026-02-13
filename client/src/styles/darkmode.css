@@ -317,6 +317,50 @@ body.dark-mode input[type="radio"]:hover {
   border-color: #5A6FC8;
 }
 
+/* Mobile Navigation Dark Mode */
+body.dark-mode .mobile-menu-toggle {
+  background-color: #4A5568;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .mobile-nav {
+  background-color: #2D3748;
+  border-bottom-color: #4A5568;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .mobile-nav-link {
+  color: #E2E8F0;
+  border-bottom-color: #4A5568;
+}
+
+body.dark-mode .mobile-nav-link:hover {
+  background-color: #4A5568;
+  color: #6B8DD6;
+}
+
+body.dark-mode .mobile-nav-user {
+  border-top-color: #4A5568;
+}
+
+body.dark-mode .mobile-nav-username {
+  color: #A0AEC0;
+}
+
+body.dark-mode .mobile-nav-logout {
+  border-color: #4A5568;
+  color: #A0AEC0;
+}
+
+body.dark-mode .mobile-nav-logout:hover {
+  background-color: #4A5568;
+  color: #E2E8F0;
+}
+
+body.dark-mode .mobile-nav-overlay {
+  background-color: rgba(26, 32, 44, 0.7);
+}
+
 /* Form validation messages in dark mode */
 body.dark-mode div[style*="color: #718096"] {
   color: #A0AEC0 !important;
