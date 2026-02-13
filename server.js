@@ -3,14 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-// Routes (Keep these as they were)
+// Routes
 const authRoutes = require('./routes/auth');
 const groupRoutes = require('./routes/groups');
 const expenseRoutes = require('./routes/expenses');
-
-// Remove these lines
-const userRoutes = require('./routes/users'); //DELETE
-const usernameRoutes = require('./routes/username'); //DELETE
 
 const app = express();
 

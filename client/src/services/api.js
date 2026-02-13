@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+// API configuration for development and production
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://pdrsplit.onrender.com/api',
   timeout: 10000,
 });
 
