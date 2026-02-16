@@ -57,15 +57,15 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     // Validation
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
     }
 
-    // Find user
-    const user = await User.findOne({ email });
+    // Find user by username
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
@@ -95,38 +95,89 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
-
-// To handle profile updates
 const updateProfile = async (req, res) => {
   try {
-    const { username } = req.body;
+    const { username, email } = req.body;
 
     if (!username) {
       return res.status(400).json({ message: 'Username is required' });
     }
 
-    // Check if username is already taken
-    const existingUser = await User.findOne({ username });
+    if (username.length < 3) {
+      return res.status(400).json({ message: 'Username must be at least 3 characters' });
+    }
+
+    // Check if username is already taken by another user
+    const existingUser = await User.findOne({ 
+      username, 
+      _id: { $ne: req.user._id } 
+    });
+    
     if (existingUser) {
       return res.status(400).json({ message: 'Username already taken' });
     }
 
-    req.user.username = username;
-    await req.user.save();
+    // Update user profile
+    const updateData = { username };
+    if (email && validator.isEmail(email)) {
+      updateData.email = email;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      updateData,
+      { new: true, runValidators: true }
+    ).select('-password');
 
     res.json({
       message: 'Profile updated successfully',
       user: {
-        id: req.user._id,
-        username: req.user.username,
-        email: req.user.email
+        id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        avatar: updatedUser.avatar
       }
     });
   } catch (error) {
+    console.error('Profile update error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Update your exports
-module.exports = { register, login, updateProfile };
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    // Validation
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'Current password and new password are required' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    }
+
+    // Get user with password
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Verify current password
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    // Update password
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: 'Password changed successfully' });
+  } catch (error) {
+    console.error('Password change error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { register, login, updateProfile, changePassword };

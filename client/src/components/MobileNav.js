@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useDarkMode } from '../context/DarkModeContext';
-import { X, Home, Users, LogOut } from 'lucide-react';
+import { X, Home, Users, LogOut, User } from 'lucide-react';
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +28,11 @@ const MobileNav = () => {
         <Link to="/dashboard" className="mobile-nav-link">
           <Home size={20} />
           Dashboard
+        </Link>
+
+        <Link to="/profile" className="mobile-nav-link">
+          <User size={20} />
+          Profile
         </Link>
 
         <div className="mobile-nav-user">

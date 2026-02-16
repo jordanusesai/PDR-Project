@@ -78,10 +78,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (username, password) => {
     try {
       dispatch({ type: 'LOGIN_START' });
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('/auth/login', { username, password });
       
       const { user, token } = response.data;
       localStorage.setItem('token', token);
@@ -134,11 +134,22 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'LOGOUT' });
   };
 
+  const updateUser = (userData) => {
+    dispatch({
+      type: 'LOGIN_SUCCESS',
+      payload: {
+        user: userData,
+        token: state.token
+      }
+    });
+  };
+
   const value = {
     ...state,
     login,
     register,
-    logout
+    logout,
+    updateUser
   };
 
   return (

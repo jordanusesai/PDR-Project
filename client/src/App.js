@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import GroupPage from './pages/GroupPage';
 import ExpenseFormPage from './pages/ExpenseFormPage';
+import ProfilePage from './pages/ProfilePage';
 import LoadingSpinner from './components/LoadingSpinner';
 import './styles/index.css';
 import './styles/darkmode.css';
@@ -37,6 +38,10 @@ function App() {
               <Route 
                 path="/dashboard" 
                 element={user ? <DashboardPage /> : <Navigate to="/login" />} 
+              />
+              <Route 
+                path="/profile" 
+                element={user ? <ProfilePage /> : <Navigate to="/login" />} 
               />
               <Route 
                 path="/group/:groupId" 

@@ -31,6 +31,11 @@ const RegisterPage = () => {
       return;
     }
 
+    if (formData.username.length < 3) {
+      toast.error('Username must be at least 3 characters');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match');
       return;

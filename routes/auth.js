@@ -1,5 +1,5 @@
-// updateProfile to your imports
-const { register, login, updateProfile } = require('../controllers/authController');
+// updateProfile and changePassword to your imports
+const { register, login, updateProfile, changePassword } = require('../controllers/authController');
 const express = require('express');
 const auth = require('../middleware/auth');
 
@@ -25,6 +25,9 @@ router.get('/me', auth, async (req, res) => {
 });
 
 // Update profile route
-router.put('/update-profile', auth, updateProfile);
+router.put('/profile', auth, updateProfile);
+
+// Change password route
+router.put('/change-password', auth, changePassword);
 
 module.exports = router;

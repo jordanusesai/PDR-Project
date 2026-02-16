@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useDarkMode } from '../context/DarkModeContext';
-import { LogOut, Home } from 'lucide-react';
+import { LogOut, Home, User } from 'lucide-react';
 import MobileNav from './MobileNav';
 
 const Header = () => {
@@ -64,6 +64,20 @@ const Header = () => {
             }}>
               <Home size={20} />
               Dashboard
+            </Link>
+
+            <Link to="/profile" style={{
+              color: 'white',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s'
+            }}>
+              <User size={20} />
+              Profile
             </Link>
 
             <div style={{

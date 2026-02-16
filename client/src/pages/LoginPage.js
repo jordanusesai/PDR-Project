@@ -6,7 +6,7 @@ import { Users, Eye, EyeOff } from 'lucide-react';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -23,12 +23,12 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.email || !formData.password) {
+    if (!formData.username || !formData.password) {
       toast.error('Please fill in all fields');
       return;
     }
 
-    const result = await login(formData.email, formData.password);
+    const result = await login(formData.username, formData.password);
     
     if (result.success) {
       toast.success('Login successful!');
@@ -84,14 +84,14 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Email</label>
+            <label className="form-label">Username</label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               className="form-input"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
               required
             />
           </div>
