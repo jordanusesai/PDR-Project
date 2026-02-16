@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGroup } from '../context/GroupContext';
 import { toast } from 'react-toastify';
-import { Plus, Users, Calendar, DollarSign } from 'lucide-react';
+import { Plus, Users, Calendar, TrendingUp } from 'lucide-react';
 import api from '../services/api';
 
 const DashboardPage = () => {
@@ -131,7 +131,7 @@ const DashboardPage = () => {
                 padding: '1rem',
                 borderRadius: '8px'
               }}>
-                <DollarSign size={24} />
+                <TrendingUp size={24} />
               </div>
               <div>
                 <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>
