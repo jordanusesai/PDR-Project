@@ -27,9 +27,130 @@ const ExpenseFormPage = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const currencies = [
-    'USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 
-    'SEK', 'NZD', 'MXN', 'SGD', 'HKD', 'NOK', 'KRW', 'TRY',
-    'INR', 'RUB', 'BRL', 'ZAR'
+    // European Currencies
+    'EUR', // Euro - European Union
+    'GBP', // British Pound - United Kingdom
+    'CHF', // Swiss Franc - Switzerland
+    'NOK', // Norwegian Krone - Norway
+    'SEK', // Swedish Krona - Sweden
+    'DKK', // Danish Krone - Denmark
+    'ISK', // Icelandic Krona - Iceland
+    'PLN', // Polish Zloty - Poland
+    'CZK', // Czech Koruna - Czech Republic
+    'HUF', // Hungarian Forint - Hungary
+    'RON', // Romanian Leu - Romania
+    'BGN', // Bulgarian Lev - Bulgaria
+    'HRK', // Croatian Kuna - Croatia
+    'RSD', // Serbian Dinar - Serbia
+    'BAM', // Bosnia and Herzegovina Mark
+    'MKD', // Macedonian Denar
+    'ALL', // Albanian Lek
+    'MDL', // Moldovan Leu
+    'UAH', // Ukrainian Hryvnia
+    'BYN', // Belarusian Ruble
+    
+    // Caribbean Currencies
+    'JMD', // Jamaican Dollar - Jamaica
+    'TTD', // Trinidad and Tobago Dollar
+    'BBD', // Barbadian Dollar - Barbados
+    'XCD', // East Caribbean Dollar - multiple islands
+    'BSD', // Bahamian Dollar - Bahamas
+    'KYD', // Cayman Islands Dollar
+    'BZD', // Belize Dollar - Belize
+    'GYD', // Guyanese Dollar - Guyana
+    'SRD', // Surinamese Dollar - Suriname
+    'AWG', // Aruban Florin - Aruba
+    'CUP', // Cuban Peso - Cuba
+    'HTG', // Haitian Gourde - Haiti
+    'DOP', // Dominican Peso - Dominican Republic
+    'XOF', // CFA Franc BCEAO - French Caribbean
+    'XAF', // CFA Franc BEAC - French Caribbean
+    
+    // Major International Currencies
+    'USD', // US Dollar - United States
+    'CAD', // Canadian Dollar - Canada
+    'AUD', // Australian Dollar - Australia
+    'NZD', // New Zealand Dollar - New Zealand
+    'JPY', // Japanese Yen - Japan
+    'CNY', // Chinese Yuan - China
+    'KRW', // South Korean Won - South Korea
+    'SGD', // Singapore Dollar - Singapore
+    'HKD', // Hong Kong Dollar - Hong Kong
+    'INR', // Indian Rupee - India
+    'RUB', // Russian Ruble - Russia
+    'BRL', // Brazilian Real - Brazil
+    'ZAR', // South African Rand - South Africa
+    'MXN', // Mexican Peso - Mexico
+    'ARS', // Argentine Peso - Argentina
+    'CLP', // Chilean Peso - Chile
+    'COP', // Colombian Peso - Colombia
+    'PEN', // Peruvian Sol - Peru
+    'UYU', // Uruguayan Peso - Uruguay
+    'VES', // Venezuelan Bolivar - Venezuela
+    'TRY', // Turkish Lira - Turkey
+    'ILS', // Israeli Shekel - Israel
+    'SAR', // Saudi Riyal - Saudi Arabia
+    'AED', // UAE Dirham - United Arab Emirates
+    'QAR', // Qatari Riyal - Qatar
+    'KWD', // Kuwaiti Dinar - Kuwait
+    'BHD', // Bahraini Dinar - Bahrain
+    'OMR', // Omani Rial - Oman
+    'JOD', // Jordanian Dinar - Jordan
+    'LBP', // Lebanese Pound - Lebanon
+    'EGP', // Egyptian Pound - Egypt
+    'MAD', // Moroccan Dirham - Morocco
+    'TND', // Tunisian Dinar - Tunisia
+    'DZD', // Algerian Dinar - Algeria
+    'LYD', // Libyan Dinar - Libya
+    'GHS', // Ghanaian Cedi - Ghana
+    'NGN', // Nigerian Naira - Nigeria
+    'KES', // Kenyan Shilling - Kenya
+    'UGX', // Ugandan Shilling - Uganda
+    'TZS', // Tanzanian Shilling - Tanzania
+    'ZMW', // Zambian Kwacha - Zambia
+    'BWP', // Botswana Pula - Botswana
+    'NAD', // Namibian Dollar - Namibia
+    'SZL', // Swazi Lilangeni - Eswatini
+    'LSL', // Lesotho Loti - Lesotho
+    'MWK', // Malawian Kwacha - Malawi
+    'MZN', // Mozambican Metical - Mozambique
+    'AOA', // Angolan Kwanza - Angola
+    'CDF', // Congolese Franc - Democratic Republic of Congo
+    'BIF', // Burundian Franc - Burundi
+    'RWF', // Rwandan Franc - Rwanda
+    'SOS', // Somali Shilling - Somalia
+    'ETB', // Ethiopian Birr - Ethiopia
+    'ERN', // Eritrean Nakfa - Eritrea
+    'DJF', // Djiboutian Franc - Djibouti
+    'YER', // Yemeni Rial - Yemen
+    'IQD', // Iraqi Dinar - Iraq
+    'IRR', // Iranian Rial - Iran
+    'AFN', // Afghan Afghani - Afghanistan
+    'PKR', // Pakistani Rupee - Pakistan
+    'LKR', // Sri Lankan Rupee - Sri Lanka
+    'BDT', // Bangladeshi Taka - Bangladesh
+    'NPR', // Nepalese Rupee - Nepal
+    'BTN', // Bhutanese Ngultrum - Bhutan
+    'MVR', // Maldivian Rufiyaa - Maldives
+    'KGS', // Kyrgyzstani Som - Kyrgyzstan
+    'TJS', // Tajikistani Somoni - Tajikistan
+    'UZS', // Uzbekistani Som - Uzbekistan
+    'AZN', // Azerbaijani Manat - Azerbaijan
+    'GEL', // Georgian Lari - Georgia
+    'AMD', // Armenian Dram - Armenia
+    'KZT', // Kazakhstani Tenge - Kazakhstan
+    'MNT', // Mongolian Tugrik - Mongolia
+    'TMT', // Turkmenistani Manat - Turkmenistan
+    'TWD', // New Taiwan Dollar - Taiwan
+    'MYR', // Malaysian Ringgit - Malaysia
+    'BND', // Brunei Dollar - Brunei
+    'IDR', // Indonesian Rupiah - Indonesia
+    'PHP', // Philippine Peso - Philippines
+    'THB', // Thai Baht - Thailand
+    'VND', // Vietnamese Dong - Vietnam
+    'KHR', // Cambodian Riel - Cambodia
+    'LAK', // Lao Kip - Laos
+    'MMK', // Myanmar Kyat - Myanmar
   ];
 
   const expenseTypes = [
