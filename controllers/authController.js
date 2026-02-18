@@ -2,8 +2,11 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const validator = require('validator');
 
+// Temporary fix for JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET || '6f9a2b8c3e4d5f1g2h3i4j6k9l7L8a9d0i';
+
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30d' });
 };
 
 const register = async (req, res) => {
@@ -57,21 +60,25 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log('Login request received:', req.body); // Debug log
     const { username, password } = req.body;
 
     // Validation
     if (!username || !password) {
+      console.log('Validation failed: missing username or password'); // Debug log
       return res.status(400).json({ message: 'Username and password are required' });
     }
 
     // Find user by username
     const user = await User.findOne({ username });
+    console.log('User found:', user ? 'Yes' : 'No'); // Debug log
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     // Check password
     const isMatch = await user.comparePassword(password);
+    console.log('Password match:', isMatch); // Debug log
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
@@ -90,7 +97,7 @@ const login = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Login error:', error); // Debug log
     res.status(500).json({ message: 'Server error' });
   }
 };

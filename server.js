@@ -29,12 +29,11 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/expenses', expenseRoutes);
 
 // Database connection - Enhanced for production
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pdr-split';
 
-if (!mongoURI) {
-  console.error("❌ ERROR: MONGODB_URI is not defined in environment variables!");
-  console.error("Please set MONGODB_URI in your Render environment variables");
-  process.exit(1);
+if (!process.env.MONGODB_URI) {
+  console.log("⚠️  WARNING: MONGODB_URI not set, using local MongoDB at mongodb://localhost:27017/pdr-split");
+  console.log("💡 Make sure MongoDB is running locally or set MONGODB_URI environment variable");
 }
 
 mongoose.connect(mongoURI, {
@@ -43,11 +42,20 @@ mongoose.connect(mongoURI, {
   serverSelectionTimeoutMS: 5000,
   socketTimeoutMS: 45000,
 })
-  .then(() => console.log('✅ Connected to MongoDB Atlas'))
+  .then(() => {
+    console.log('✅ Connected to MongoDB');
+    console.log('📍 Database:', mongoURI.includes('localhost') ? 'Local MongoDB' : 'MongoDB Atlas');
+  })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
     if (err.code === 8000) {
       console.error('🔑 Authentication failed - Check your MongoDB credentials');
+    }
+    if (err.code === 'ECONNREFUSED') {
+      console.error('🔌 Connection refused - Make sure MongoDB is running');
+      console.log('💡 To start MongoDB locally:');
+      console.log('   Windows: net start MongoDB');
+      console.log('   Or install MongoDB Community Server');
     }
   });
 

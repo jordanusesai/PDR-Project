@@ -83,6 +83,8 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'LOGIN_START' });
       const response = await api.post('/auth/login', { username, password });
       
+      console.log('Login response:', response.data); // Debug log
+      
       const { user, token } = response.data;
       localStorage.setItem('token', token);
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -94,6 +96,7 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true };
     } catch (error) {
+      console.log('Login error details:', error.response?.data); // Debug log
       const message = error.response?.data?.message || 'Login failed';
       dispatch({
         type: 'LOGIN_FAILURE',
