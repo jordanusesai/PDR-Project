@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useGroup } from '../context/GroupContext';
+import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { Plus, Users, ArrowLeft, DollarSign, Edit, Trash2, UserPlus, UserMinus } from 'lucide-react';
 import api from '../services/api';
@@ -8,11 +9,14 @@ import api from '../services/api';
 const GroupPage = () => {
   const { groupId } = useParams();
   const { currentGroup, fetchGroup, addMember, removeMember } = useGroup();
+  const { user } = useAuth();
   const [expenses, setExpenses] = useState([]);
   const [balances, setBalances] = useState({});
   const [loading, setLoading] = useState(true);
   const [showAddMember, setShowAddMember] = useState(false);
   const [newMemberEmail, setNewMemberEmail] = useState('');
+  const [showEditGroup, setShowEditGroup] = useState(false);
+  const [editFormData, setEditFormData] = useState({ name: '', description: '' });
 
   useEffect(() => {
     if (groupId) {
@@ -92,6 +96,46 @@ const GroupPage = () => {
     }
   };
 
+  const handleEditGroup = () => {
+    setEditFormData({
+      name: currentGroup.name,
+      description: currentGroup.description || ''
+    });
+    setShowEditGroup(true);
+  };
+
+  const handleUpdateGroup = async (e) => {
+    e.preventDefault();
+    
+    if (!editFormData.name.trim()) {
+      toast.error('Group name is required');
+      return;
+    }
+
+    try {
+      const response = await api.put(`/groups/${groupId}`, editFormData);
+      toast.success('Group updated successfully!');
+      setShowEditGroup(false);
+      fetchGroupData();
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update group');
+    }
+  };
+
+  const handleDeleteGroup = async () => {
+    if (!window.confirm('Are you sure you want to delete this group? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await api.delete(`/groups/${groupId}`);
+      toast.success('Group deleted successfully!');
+      window.location.href = '/dashboard';
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete group');
+    }
+  };
+
   if (loading) {
     return (
       <div style={{
@@ -146,13 +190,35 @@ const GroupPage = () => {
             </div>
           </div>
           
-          <Link
-            to={`/group/${groupId}/expense`}
-            className="btn btn-primary"
-          >
-            <Plus size={20} />
-            Add Expense
-          </Link>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {currentGroup.createdBy._id === user?.id && (
+              <>
+                <button
+                  onClick={handleEditGroup}
+                  className="btn btn-secondary"
+                  style={{ padding: '0.5rem 1rem' }}
+                >
+                  <Edit size={16} />
+                  Edit Group
+                </button>
+                <button
+                  onClick={handleDeleteGroup}
+                  className="btn btn-danger"
+                  style={{ padding: '0.5rem 1rem' }}
+                >
+                  <Trash2 size={16} />
+                  Delete Group
+                </button>
+              </>
+            )}
+            <Link
+              to={`/group/${groupId}/expense`}
+              className="btn btn-primary"
+            >
+              <Plus size={20} />
+              Add Expense
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-3">
@@ -268,6 +334,61 @@ const GroupPage = () => {
                       </button>
                       <button type="submit" className="btn btn-primary">
                         Add Member
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {/* Edit Group Modal */}
+            {showEditGroup && (
+              <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1000
+              }}>
+                <div className="card" style={{ maxWidth: '400px', width: '90%' }}>
+                  <h3 style={{ marginBottom: '1rem' }}>Edit Group</h3>
+                  <form onSubmit={handleUpdateGroup}>
+                    <div className="form-group">
+                      <label className="form-label">Group Name *</label>
+                      <input
+                        type="text"
+                        value={editFormData.name}
+                        onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
+                        className="form-input"
+                        placeholder="Enter group name"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Description</label>
+                      <textarea
+                        value={editFormData.description}
+                        onChange={(e) => setEditFormData(prev => ({ ...prev, description: e.target.value }))}
+                        className="form-textarea"
+                        placeholder="Enter group description"
+                        rows="3"
+                      />
+                    </div>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                      <button
+                        type="button"
+                        onClick={() => setShowEditGroup(false)}
+                        className="btn btn-secondary"
+                      >
+                        Cancel
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        Update Group
                       </button>
                     </div>
                   </form>

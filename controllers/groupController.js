@@ -150,10 +150,87 @@ const removeMember = async (req, res) => {
   }
 };
 
+const updateGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const { name, description } = req.body;
+
+    if (!name) {
+      return res.status(400).json({ message: 'Group name is required' });
+    }
+
+    const group = await Group.findOne({
+      _id: groupId,
+      'members.user': req.user._id,
+      isActive: true
+    });
+
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found or access denied' });
+    }
+
+    // Only creator can update group
+    if (group.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Only group creator can update group' });
+    }
+
+    group.name = name;
+    if (description !== undefined) {
+      group.description = description;
+    }
+
+    await group.save();
+    await group.populate('members.user', 'username email avatar');
+    await group.populate('createdBy', 'username email avatar');
+
+    res.json({
+      message: 'Group updated successfully',
+      group
+    });
+  } catch (error) {
+    console.error('Update group error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const deleteGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+
+    const group = await Group.findOne({
+      _id: groupId,
+      'members.user': req.user._id,
+      isActive: true
+    });
+
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found or access denied' });
+    }
+
+    // Only creator can delete group
+    if (group.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Only group creator can delete group' });
+    }
+
+    // Soft delete - set isActive to false
+    group.isActive = false;
+    await group.save();
+
+    res.json({
+      message: 'Group deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete group error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   createGroup,
   getUserGroups,
   getGroupById,
   addMember,
-  removeMember
+  removeMember,
+  updateGroup,
+  deleteGroup
 };
