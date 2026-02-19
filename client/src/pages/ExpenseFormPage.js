@@ -611,11 +611,14 @@ const ExpenseFormPage = () => {
                   <div className="form-group">
                     <div style={{
                       padding: '0.75rem',
-                      backgroundColor: '#F0F4F8',
+                      backgroundColor: document.body.classList.contains('dark-mode') ? '#2D3748' : '#F0F4F8',
                       borderRadius: '8px',
                       border: '2px solid #6B8DD6'
                     }}>
-                      <div style={{ fontSize: '0.9rem', color: '#718096' }}>
+                      <div style={{ 
+                        fontSize: '0.9rem', 
+                        color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#718096' 
+                      }}>
                         Amount in GBP:
                       </div>
                       <div style={{

@@ -135,13 +135,13 @@ const GroupPage = () => {
             <div>
               <h1 style={{
                 fontSize: '2rem',
-                color: '#2D3748',
+                color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748',
                 marginBottom: '0.5rem'
               }}>
                 {currentGroup.name}
               </h1>
               {currentGroup.description && (
-                <p style={{ color: '#718096' }}>{currentGroup.description}</p>
+                <p style={{ color: document.body.classList.contains('dark-mode') ? '#A0AEC0' : '#718096' }}>{currentGroup.description}</p>
               )}
             </div>
           </div>
@@ -166,7 +166,7 @@ const GroupPage = () => {
             }}>
               <h2 style={{
                 fontSize: '1.2rem',
-                color: '#2D3748'
+                color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748'
               }}>
                 Members
               </h2>
@@ -188,7 +188,7 @@ const GroupPage = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '0.75rem',
-                    backgroundColor: '#F7FAFC',
+                    backgroundColor: document.body.classList.contains('dark-mode') ? '#2D3748' : '#F7FAFC',
                     borderRadius: '8px'
                   }}
                 >
@@ -208,10 +208,10 @@ const GroupPage = () => {
                       {member.user.username.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <div style={{ fontWeight: '600', color: '#2D3748' }}>
+                      <div style={{ fontWeight: '600', color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748' }}>
                         {member.user.username}
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: '#718096' }}>
+                      <div style={{ fontSize: '0.8rem', color: document.body.classList.contains('dark-mode') ? '#A0AEC0' : '#718096' }}>
                         {member.user.email}
                       </div>
                     </div>
@@ -280,7 +280,7 @@ const GroupPage = () => {
           <div className="card">
             <h2 style={{
               fontSize: '1.2rem',
-              color: '#2D3748',
+              color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748',
               marginBottom: '1.5rem'
             }}>
               Balances
@@ -295,7 +295,7 @@ const GroupPage = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '0.75rem',
-                    backgroundColor: '#F7FAFC',
+                    backgroundColor: document.body.classList.contains('dark-mode') ? '#2D3748' : '#F7FAFC',
                     borderRadius: '8px'
                   }}
                 >
@@ -314,7 +314,7 @@ const GroupPage = () => {
                     }}>
                       {balance.user.username.charAt(0).toUpperCase()}
                     </div>
-                    <span style={{ fontWeight: '600', color: '#2D3748' }}>
+                    <span style={{ fontWeight: '600', color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748' }}>
                       {balance.user.username}
                     </span>
                   </div>
@@ -335,7 +335,7 @@ const GroupPage = () => {
           <div className="card">
             <h2 style={{
               fontSize: '1.2rem',
-              color: '#2D3748',
+              color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748',
               marginBottom: '1.5rem'
             }}>
               Recent Expenses
@@ -345,7 +345,7 @@ const GroupPage = () => {
               <div style={{
                 textAlign: 'center',
                 padding: '2rem',
-                color: '#718096'
+                color: document.body.classList.contains('dark-mode') ? '#A0AEC0' : '#718096'
               }}>
                 <DollarSign size={48} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
                 <p>No expenses yet</p>
@@ -364,7 +364,7 @@ const GroupPage = () => {
                     key={expense._id}
                     style={{
                       padding: '0.75rem',
-                      backgroundColor: '#F7FAFC',
+                      backgroundColor: document.body.classList.contains('dark-mode') ? '#2D3748' : '#F7FAFC',
                       borderRadius: '8px',
                       borderLeft: `4px solid #6B8DD6`
                     }}
@@ -376,10 +376,10 @@ const GroupPage = () => {
                       marginBottom: '0.5rem'
                     }}>
                       <div>
-                        <div style={{ fontWeight: '600', color: '#2D3748' }}>
+                        <div style={{ fontWeight: '600', color: document.body.classList.contains('dark-mode') ? '#E2E8F0' : '#2D3748' }}>
                           {expense.title}
                         </div>
-                        <div style={{ fontSize: '0.8rem', color: '#718096' }}>
+                        <div style={{ fontSize: '0.8rem', color: document.body.classList.contains('dark-mode') ? '#A0AEC0' : '#718096' }}>
                           {expense.expenseType} • {expense.splitBetween.length} people
                         </div>
                       </div>
