@@ -16,9 +16,9 @@ const ExpenseFormPage = () => {
   const [formData, setFormData] = useState({
     title: '',
     amount: '',
-    currency: '',
+    currency: 'United Kingdom-GBP',
     conversionRate: '1.00',
-    expenseType: 'other',
+    expenseType: 'food',
     description: '',
     paidBy: '',
     splitBetween: []
@@ -29,7 +29,7 @@ const ExpenseFormPage = () => {
   
   // Currency search state
   const [currencySearchOpen, setCurrencySearchOpen] = useState(false);
-  const [currencySearchTerm, setCurrencySearchTerm] = useState('');
+  const [currencySearchTerm, setCurrencySearchTerm] = useState('United Kingdom - GBP');
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
 
   const currencies = [
@@ -58,7 +58,6 @@ const ExpenseFormPage = () => {
     { code: 'EUR', name: 'Euro', country: 'Slovakia' },
     { code: 'EUR', name: 'Euro', country: 'Slovenia' },
     { code: 'EUR', name: 'Euro', country: 'Spain' },
-    { code: 'GBP', name: 'British Pound', country: 'United Kingdom' },
     { code: 'CHF', name: 'Swiss Franc', country: 'Switzerland' },
     { code: 'NOK', name: 'Norwegian Krone', country: 'Norway' },
     { code: 'SEK', name: 'Swedish Krona', country: 'Sweden' },
@@ -229,13 +228,16 @@ const ExpenseFormPage = () => {
   ].sort((a, b) => a.country.localeCompare(b.country));
 
   // Get display text for currency
-  const getCurrencyDisplay = (currency) => {
-    if (typeof currency === 'string') {
-      // For backward compatibility with existing data
-      const found = currencies.find(c => c.code === currency);
-      return found ? `${found.country} - ${found.code}` : currency;
+  const getCurrencyDisplay = (currencyCode) => {
+    // Find the exact currency object that matches the stored value
+    const found = currencies.find(c => `${c.country}-${c.code}` === currencyCode);
+    if (found) {
+      return `${found.country} - ${found.code}`;
     }
-    return `${currency.country} - ${currency.code}`;
+    
+    // Fallback for old format (just currency code)
+    const fallback = currencies.find(c => c.code === currencyCode);
+    return fallback ? `${fallback.country} - ${fallback.code}` : currencyCode;
   };
 
   // Get currently selected currency object
@@ -355,23 +357,11 @@ const ExpenseFormPage = () => {
   };
 
   const handleCurrencySelect = (currency) => {
-    setFormData(prev => ({ ...prev, currency: currency.code }));
+    setFormData(prev => ({ ...prev, currency: `${currency.country}-${currency.code}` }));
     setCurrencySearchOpen(false);
     // Show selected currency after selection
-    setCurrencySearchTerm(getCurrencyDisplay(formData.currency));
+    setCurrencySearchTerm(getCurrencyDisplay(`${currency.country}-${currency.code}`));
     setSelectedCurrencyIndex(-1);
-  };
-
-  const handleCurrencySearchBlur = () => {
-    // Delay closing to allow clicking on options
-    setTimeout(() => {
-      setCurrencySearchOpen(false);
-      setSelectedCurrencyIndex(-1);
-      // If search term is empty, show selected currency
-      if (!currencySearchTerm) {
-        setCurrencySearchTerm(getCurrencyDisplay(formData.currency));
-      }
-    }, 200);
   };
 
   const handleCurrencyKeyDown = (e) => {
@@ -563,7 +553,6 @@ const ExpenseFormPage = () => {
                         value={currencySearchOpen ? currencySearchTerm : (currencySearchTerm ? currencySearchTerm : getCurrencyDisplay(formData.currency))}
                         onChange={handleCurrencySearchChange}
                         onClick={handleCurrencySearchClick}
-                        onBlur={handleCurrencySearchBlur}
                         onKeyDown={handleCurrencyKeyDown}
                         onFocus={handleCurrencySearchClick}
                         placeholder="Search currency..."
@@ -580,11 +569,12 @@ const ExpenseFormPage = () => {
                             filteredCurrencies.map((currency, index) => {
                               // Add separator class for the dashed line
                               const isSeparator = currency.code === '---';
+                              const isSelected = `${currency.country}-${currency.code}` === formData.currency;
                               return (
                                 <div
                                   key={`${currency.code}-${currency.country}-${index}`}
-                                  onClick={() => !isSeparator && handleCurrencySelect(currency)}
-                                  className={`${isSeparator ? 'separator' : ''} ${currency.code === formData.currency ? 'selected' : ''} ${index === selectedCurrencyIndex ? 'highlighted' : ''}`}
+                                  onMouseDown={() => !isSeparator && handleCurrencySelect(currency)}
+                                  className={`${isSeparator ? 'separator' : ''} ${isSelected ? 'selected' : ''} ${index === selectedCurrencyIndex ? 'highlighted' : ''}`}
                                 >
                                   {currency.country} - {currency.code}
                                 </div>
