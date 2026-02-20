@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useGroup } from '../context/GroupContext';
 import { toast } from 'react-toastify';
 import { Plus, Users, Calendar, TrendingUp } from 'lucide-react';
+import FeedbackButton from '../components/FeedbackButton';
 import api from '../services/api';
 
 const DashboardPage = () => {
@@ -65,13 +66,16 @@ const DashboardPage = () => {
               Manage your groups and track expenses
             </p>
           </div>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="btn btn-primary"
-          >
-            <Plus size={20} />
-            Create Group
-          </button>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="btn btn-primary"
+            >
+              <Plus size={20} />
+              Create Group
+            </button>
+            <FeedbackButton triggerLocation="dashboard" />
+          </div>
         </div>
 
         {/* Stats Cards */}

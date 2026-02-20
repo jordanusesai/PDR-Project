@@ -10,6 +10,8 @@ import DashboardPage from './pages/DashboardPage';
 import GroupPage from './pages/GroupPage';
 import ExpenseFormPage from './pages/ExpenseFormPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminFeedbackPage from './pages/AdminFeedbackPage';
+import JoinGroupPage from './pages/JoinGroupPage';
 import LoadingSpinner from './components/LoadingSpinner';
 import './styles/index.css';
 import './styles/darkmode.css';
@@ -50,6 +52,14 @@ function App() {
               <Route 
                 path="/group/:groupId/expense/:expenseId?" 
                 element={user ? <ExpenseFormPage /> : <Navigate to="/login" />} 
+              />
+              <Route 
+                path="/join/:groupId/:token" 
+                element={<JoinGroupPage />} 
+              />
+              <Route 
+                path="/admin/feedback" 
+                element={user && user.role === 'admin' ? <AdminFeedbackPage /> : <Navigate to="/login" />} 
               />
               <Route 
                 path="/" 

@@ -6,6 +6,7 @@ import './ExpenseFormPage.css';
 import { useGroup } from '../context/GroupContext';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Save, Trash2 } from 'lucide-react';
+import FeedbackButton from '../components/FeedbackButton';
 
 const ExpenseFormPage = () => {
   const { groupId, expenseId } = useParams();
@@ -503,15 +504,18 @@ const ExpenseFormPage = () => {
               </h1>
             </div>
             
-            {isEditing && (
-              <button
-                onClick={handleDelete}
-                className="btn btn-danger"
-              >
-                <Trash2 size={20} />
-                Delete
-              </button>
-            )}
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {isEditing && (
+                <button
+                  onClick={handleDelete}
+                  className="btn btn-danger"
+                >
+                  <Trash2 size={20} />
+                  Delete
+                </button>
+              )}
+              <FeedbackButton triggerLocation={isEditing ? "edit-expense" : "add-expense"} />
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="card">

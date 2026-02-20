@@ -7,6 +7,8 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const groupRoutes = require('./routes/groups');
 const expenseRoutes = require('./routes/expenses');
+const feedbackRoutes = require('./routes/feedback');
+const shareRoutes = require('./routes/share');
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/expenses', expenseRoutes);
+app.use('/api/feedback', feedbackRoutes);
+app.use('/api/share', shareRoutes);
 
 // Database connection - Enhanced for production
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pdr-split';

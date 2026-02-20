@@ -3,7 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { useGroup } from '../context/GroupContext';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-import { Plus, Users, ArrowLeft, DollarSign, Edit, Trash2, UserPlus, UserMinus } from 'lucide-react';
+import { Plus, Users, ArrowLeft, DollarSign, Edit, Trash2, UserPlus, UserMinus, Share2 } from 'lucide-react';
+import FeedbackButton from '../components/FeedbackButton';
+import ShareGroupModal from '../components/ShareGroupModal';
 import api from '../services/api';
 
 const GroupPage = () => {
@@ -17,6 +19,7 @@ const GroupPage = () => {
   const [newMemberEmail, setNewMemberEmail] = useState('');
   const [showEditGroup, setShowEditGroup] = useState(false);
   const [editFormData, setEditFormData] = useState({ name: '', description: '' });
+  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
     if (groupId) {
@@ -162,6 +165,58 @@ const GroupPage = () => {
     );
   }
 
+  // Check if current user is a member of the group
+  const isMember = currentGroup.members.some(member => 
+    member.user._id === user?.id
+  );
+
+  if (!isMember) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '60vh'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          padding: '2rem',
+          background: 'white',
+          borderRadius: '8px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          maxWidth: '400px'
+        }}>
+          <h2 style={{
+            color: '#ef4444',
+            marginBottom: '1rem'
+          }}>Access Denied</h2>
+          <p style={{
+            color: '#718096',
+            marginBottom: '1.5rem'
+          }}>You don't have permission to access this group.</p>
+          <p style={{
+            color: '#718096',
+            marginBottom: '1.5rem'
+          }}>You need to be invited by a group member to join.</p>
+          <Link 
+            to="/dashboard" 
+            style={{
+              display: 'inline-block',
+              backgroundColor: '#6b8dd6',
+              color: 'white',
+              padding: '0.75rem 1.5rem',
+              textDecoration: 'none',
+              borderRadius: '6px',
+              fontWeight: '500'
+            }}
+          >
+            Go to Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: '2rem 0' }}>
       <div className="container">
@@ -209,6 +264,15 @@ const GroupPage = () => {
                   <Trash2 size={16} />
                   Delete Group
                 </button>
+                <button
+                  onClick={() => setShowShareModal(true)}
+                  className="btn btn-secondary"
+                  style={{ padding: '0.5rem 1rem' }}
+                  title="Share group"
+                >
+                  <Share2 size={16} />
+                  Share
+                </button>
               </>
             )}
             <Link
@@ -218,6 +282,7 @@ const GroupPage = () => {
               <Plus size={20} />
               Add Expense
             </Link>
+            <FeedbackButton triggerLocation="group-page" />
           </div>
         </div>
 
@@ -536,6 +601,13 @@ const GroupPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Share Group Modal */}
+      <ShareGroupModal 
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        group={currentGroup}
+      />
     </div>
   );
 };
