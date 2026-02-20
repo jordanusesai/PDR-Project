@@ -47,18 +47,21 @@ const getUserGroups = async (req, res) => {
   }
 };
 
-const getGroupById = async (req, res) => {
+const getGroup = async (req, res) => {
   try {
+    const { groupId } = req.params;
+    const userId = req.user._id;
+
     const group = await Group.findOne({
-      _id: req.params.groupId,
-      'members.user': req.user._id,
+      _id: groupId,
+      'members.user': userId,
       isActive: true
     })
-    .populate('members.user', 'username email avatar')
-    .populate('createdBy', 'username email avatar');
+      .populate('createdBy', 'username email')
+      .populate('members.user', 'username email');
 
     if (!group) {
-      return res.status(404).json({ message: 'Group not found' });
+      return res.status(404).json({ message: 'Group not found or access denied' });
     }
 
     res.json({ group });

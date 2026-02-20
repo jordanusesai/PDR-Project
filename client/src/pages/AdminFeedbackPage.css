@@ -1,0 +1,380 @@
+.admin-feedback-page {
+  padding: 2rem 0;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.admin-feedback-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-feedback-header h1 {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.admin-feedback-header p {
+  color: #718096;
+  font-size: 1rem;
+}
+
+/* Filters Section */
+.feedback-filters {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.filter-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.filter-item label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.search-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input input {
+  flex: 1;
+  padding-left: 2.5rem;
+}
+
+/* Feedback List */
+.feedback-list {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.no-feedback {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #718096;
+}
+
+.no-feedback h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.no-feedback p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.feedback-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feedback-item:hover {
+  border-color: #6b8dd6;
+  box-shadow: 0 4px 6px rgba(107, 141, 214, 0.1);
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.feedback-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.feedback-type {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+.feedback-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+.rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.feedback-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.feedback-content {
+  flex: 1;
+}
+
+.feedback-content h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-content p {
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.feedback-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.feedback-location,
+.feedback-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #6b8dd6;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  padding: 0.5rem 1rem;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* Detail Modal */
+.feedback-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.feedback-detail-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-header h3 {
+  margin: 0;
+  color: #2d3748;
+  font-size: 1.25rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #718096;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background-color: #f7fafc;
+  color: #2d3748;
+}
+
+.detail-content {
+  padding: 1.5rem;
+}
+
+.detail-section {
+  margin-bottom: 1.5rem;
+}
+
+.detail-section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.detail-section p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-item label {
+  font-weight: 500;
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+/* Dark mode styles */
+body.dark-mode .admin-feedback-page {
+  background-color: #1a202c;
+}
+
+body.dark-mode .feedback-filters {
+  background: #2d3748;
+  border-color: #4a5568;
+}
+
+body.dark-mode .feedback-list {
+  background: #2d3748;
+  border-color: #4a5568;
+}
+
+body.dark-mode .feedback-item {
+  border-color: #4a5568;
+}
+
+body.dark-mode .feedback-item:hover {
+  border-color: #6b8dd6;
+}
+
+body.dark-mode .detail-header {
+  border-color: #4a5568;
+}
+
+body.dark-mode .detail-header h3 {
+  color: #e2e8f0;
+}
+
+body.dark-mode .detail-section h4 {
+  color: #e2e8f0;
+}
+
+body.dark-mode .detail-section p {
+  color: #e2e8f0;
+}
+
+body.dark-mode .detail-modal {
+  background: #2d3748;
+}
+
+body.dark-mode .close-btn {
+  color: #a0aec0;
+}
+
+body.dark-mode .close-btn:hover {
+  background-color: #4a5568;
+  color: #e2e8f0;
+}
+
+body.dark-mode .pagination button {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+body.dark-mode .pagination button:hover:not(:disabled) {
+  background-color: #4a5568;
+  border-color: #6b8dd6;
+}
+
+body.dark-mode .page-info {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}

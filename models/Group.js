@@ -26,11 +26,24 @@ const groupSchema = new mongoose.Schema({
     joinedAt: {
       type: Date,
       default: Date.now
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'member'],
+      default: 'member'
     }
   }],
   isActive: {
     type: Boolean,
     default: true
+  },
+  shareToken: {
+    type: String,
+    default: undefined
+  },
+  shareTokenExpiry: {
+    type: Date,
+    default: undefined
   }
 }, {
   timestamps: true
