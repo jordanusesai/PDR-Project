@@ -193,16 +193,16 @@ const FeedbackForm = ({ isOpen, onClose, triggerLocation }) => {
               disabled={loading}
             >
               {loading ? (
-                <>
-                  <div className="spinner-small"></div>
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send size={16} />
-                  Send Feedback
-                </>
-              )}
+  <React.Fragment>
+    <div className="spinner-small"></div>
+    Sending...
+  </React.Fragment>
+) : (
+  <React.Fragment>
+    <Send size={16} />
+    Send Feedback
+  </React.Fragment>
+)}
             </button>
           </div>
         </form>

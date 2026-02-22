@@ -65,13 +65,20 @@ mongoose.connect(mongoURI, {
 
   const path = require('path');
 
-// 1. Serve static files from the React frontend build folder
-// 'client/build' is standard for Create React App. 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// 1. Serve static files from React frontend
+// Try build folder first (production), fallback to public folder (development)
+const buildPath = path.join(__dirname, 'client/build');
+const publicPath = path.join(__dirname, 'client/public');
+
+// Check if build exists, otherwise use public folder
+app.use(express.static(require('fs').existsSync(buildPath) ? buildPath : publicPath));
 
 // 2. Anything that doesn't match an API route, send back the index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  const indexPath = require('fs').existsSync(buildPath) 
+    ? path.join(__dirname, 'client/build', 'index.html')
+    : path.join(__dirname, 'client/public', 'index.html');
+  res.sendFile(indexPath);
 });
 
 // PORT setup
